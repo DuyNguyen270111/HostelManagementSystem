@@ -4,14 +4,36 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>@ViewBag.HostelName</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form method="post" asp-action="Index" class="form-inline mb-3">
+    <div class="d-flex align-items-center">
+
+        <!-- Bộ lọc (Filter) -->
+        <select name="statusFilter" class="form-select" style="width: 180px;">
+            <option value="">-- Filter by Status --</option>
+            <option value="Active">Active</option>
+            <option value="InActive">Inactive</option>
+        </select>
+
+        <button type="submit" name = "action" value ="filter" class="btn btn-secondary ms-2">Filter</button>
+
+        <!-- Ô tìm kiếm (Search) -->
+        <input type="text" name="searchString" class="form-control ms-4"
+               style="width: 220px;" placeholder="Search by room number..." />
+
+        <button type="submit" name = "action" value = "search"class="btn btn-info ms-2">Search</button>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomId)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.RoomNumber)
             </th>
@@ -37,6 +59,9 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.RoomId)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.RoomNumber)
             </td>
             <td>
@@ -52,12 +77,22 @@
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Hostel.HostelId)
+                @Html.DisplayFor(modelItem => item.Hostel.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.RoomId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.RoomId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RoomId">Delete</a>
+                    <form asp-action="ToggleStatus" asp-route-id="@item.RoomId" method="post" style="display:inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" 
+                            class="btn btn-link p-0 m-0 align-baseline"
+                            style=" display:inline; color:#0d6efd; text-decoration:underline;"
+                            onclick="return confirm('@(item.Status == "Active"
+                                                ? "Are you sure you want to deactivate this room?"
+                                                : "Are you sure you want to activate this room?")');">
+                        @(item.Status == "Active" ? "Deactivate" : "Activate")
+                        </button>
+                    </form>
             </td>
         </tr>
 }

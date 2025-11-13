@@ -7,25 +7,53 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HostelManagement.BusinessObject;
 using HostelManagement.Models;
+using Service;
 
 namespace HostelManagement.Controllers
 {
     public class RoomsController : Controller
     {
         private readonly ProjectttContext _context;
-
-        public RoomsController(ProjectttContext context)
+        private readonly IRoomService roomService;
+        public RoomsController()
         {
-            _context = context;
+            _context = new ProjectttContext();
+            roomService = new RoomService();
         }
 
         // GET: Rooms
         public async Task<IActionResult> Index()
         {
-            var projectttContext = _context.Rooms.Include(r => r.Hostel);
-            return View(await projectttContext.ToListAsync());
+            int wardenId = 2;
+            var roomList = roomService.GetRoomsByWardenId(wardenId);
+            ViewBag.HostelName = _context.Wardens
+                                        .Include(w => w.Hostel)
+                                        .Where(w => w.WardenId == wardenId)
+                                        .Select(w => w.Hostel.Name)
+                                        .FirstOrDefault();
+            return View(roomList);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Index(string statusFilter, string searchString, string action)
+        {
+            int wardenId = 2;
+            var roomList = roomService.GetRoomsByWardenId(wardenId).AsQueryable();
+            if (action == "filter" && !string.IsNullOrEmpty(statusFilter))
+            {
+                roomList = roomList.Where(r => r.Status.Equals(statusFilter));
+            }else if (action == "search" && !string.IsNullOrEmpty(searchString))
+            {
+                roomList = roomList.Where(r => r.RoomNumber.Contains(searchString));
+            }
+            ViewBag.HostelName = _context.Wardens
+                                            .Include(w => w.Hostel)
+                                            .Where(w => w.WardenId == wardenId)
+                                            .Select(w => w.Hostel.Name)
+                                            .FirstOrDefault();
 
+            return View(roomList.ToList());
+        }
         // GET: Rooms/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -48,7 +76,9 @@ namespace HostelManagement.Controllers
         // GET: Rooms/Create
         public IActionResult Create()
         {
-            ViewData["HostelId"] = new SelectList(_context.Hostels, "HostelId", "HostelId");
+            int wardenId = 2;
+            var hostel = roomService.GetHostelByWardenId(wardenId);
+            ViewBag.Hostel = hostel;
             return View();
         }
 
@@ -59,30 +89,42 @@ namespace HostelManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RoomId,HostelId,RoomNumber,Capacity,Occupied,Status,Type")] Room room)
         {
-            if (ModelState.IsValid)
+            int wardenId = 2;
+            if (!ModelState.IsValid)
             {
-                _context.Add(room);
-                await _context.SaveChangesAsync();
+                ViewBag.Hostel  = roomService.GetHostelByWardenId(wardenId);
+                return View(room);
+            }
+            try
+            {
+                roomService.AddRoom(room);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HostelId"] = new SelectList(_context.Hostels, "HostelId", "HostelId", room.HostelId);
-            return View(room);
+            catch(InvalidOperationException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                ViewBag.Hostel = roomService.GetHostelByWardenId(wardenId);
+                return View(room);
+            }
+
         }
 
         // GET: Rooms/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
+            int wardenId = 2;
             if (id == null)
             {
                 return NotFound();
             }
 
-            var room = await _context.Rooms.FindAsync(id);
+            var room = roomService.GetRoomById(id);
             if (room == null)
             {
                 return NotFound();
             }
-            ViewData["HostelId"] = new SelectList(_context.Hostels, "HostelId", "HostelId", room.HostelId);
+            var hostel = roomService.GetHostelByWardenId(wardenId);
+            ViewBag.Hostel = hostel;
             return View(room);
         }
 
@@ -93,67 +135,44 @@ namespace HostelManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("RoomId,HostelId,RoomNumber,Capacity,Occupied,Status,Type")] Room room)
         {
+            int wardenId = 2;
             if (id != room.RoomId)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(room);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RoomExists(room.RoomId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                ViewBag.Hostel = roomService.GetHostelByWardenId(wardenId);
+                return View(room);
+            }
+            try
+            {
+                roomService.EditRoomById(room);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HostelId"] = new SelectList(_context.Hostels, "HostelId", "HostelId", room.HostelId);
-            return View(room);
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                ViewBag.Hostel = roomService.GetHostelByWardenId(wardenId);
+                return View(room);
+            }
         }
 
-        // GET: Rooms/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var room = await _context.Rooms
-                .Include(r => r.Hostel)
-                .FirstOrDefaultAsync(m => m.RoomId == id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-
-            return View(room);
-        }
-
-        // POST: Rooms/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult ToggleStatus(int id)
         {
-            var room = await _context.Rooms.FindAsync(id);
-            if (room != null)
+            try
             {
-                _context.Rooms.Remove(room);
+                roomService.ToggleStatus(id);
+                return RedirectToAction(nameof(Index));
             }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         private bool RoomExists(int id)
