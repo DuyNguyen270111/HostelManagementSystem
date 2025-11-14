@@ -37,6 +37,11 @@ namespace Repository
             return RoomDAO.GetRoomById(id);
         }
 
+        public int GetRoomCountByHostelId(int hostelId)
+        {
+            return RoomDAO.GetRoomCountByHostelId(hostelId);
+        }
+
         public List<Room> GetRoomsByWardenId(int wardenId)
         {
             return RoomDAO.GetRoomsByWardenId(wardenId);

@@ -58,13 +58,7 @@ namespace DataAccessObject
                 _context.SaveChanges();
             }
         }
-        public static List<Hostel> GetAllHostel()
-        {
-            using (var _context = new ProjectttContext())
-            {
-                return _context.Hostels.ToList();
-            }
-        }
+        
         public static Room GetRoomById(int id)
         {
             using (var _context = new ProjectttContext())
@@ -106,6 +100,15 @@ namespace DataAccessObject
                     room.Status = "Active";
                     EditRoomById(room);
                 }
+            }
+        }
+        public static int GetRoomCountByHostelId(int hostelId)
+        {
+            using (var context = new ProjectttContext())
+            {
+                // Đếm số phòng thuộc hostel có HostelId tương ứng
+                int count = context.Rooms.Count(r => r.HostelId == hostelId);
+                return count;
             }
         }
     }

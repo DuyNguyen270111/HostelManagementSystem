@@ -16,5 +16,6 @@ namespace Service
         void ToggleStatus(int id);
         List<Room> GetRoomsByWardenId(int wardenId);
         Hostel GetHostelByWardenId(int wardenId);
+        int GetRoomCountByHostelId(int hostelId);
     }
 }
