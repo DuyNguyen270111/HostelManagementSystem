@@ -27,11 +27,9 @@
 
                 <!-- Toggle button for mobile -->
                 <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-<<<<<<< HEAD
+
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-=======
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
->>>>>>> 7e29fa935e0f593dd78eb1c934e1e2fc414d880a
+
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -52,20 +50,34 @@
                             <a class="nav-link" asp-area="" asp-controller="Students" asp-action="Index">
                                 <i class="bi bi-people me-1"></i> Sinh viên
                             </a>
-                        </li>
+                        </li>@if (roleName == "Admin")
+                        {
+
+                           
+                            <a class="nav-link" asp-area="" asp-controller="HostelUsers" asp-action="Index">
+                                <i class="bi bi-people me-1"></i> Quản lý người dùng
+                            </a>
+                        }
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="bi bi-gear me-1"></i> Quản lý
                             </a>
+                            
                             <ul class="dropdown-menu dropdown-menu-end shadow">
-<<<<<<< HEAD
+
+
+
+
+
+
+
+
+
 
                                 <li><a class="dropdown-item" asp-controller="Students" asp-action="Index">Khiếu nại</a></li>
-                                @if (roleName == "Warden" || roleName == "Admin")
-                                {
-                                    <li><a class="dropdown-item" asp-controller="Rooms" asp-action="Index">Phòng</a></li>
-                                }
+                               
                                 <li><a class="dropdown-item" asp-controller="Payments" asp-action="Index">Thanh toán</a></li>
+                                <li><a class="dropdown-item" asp-controller="Rooms" asp-action="Index">Phòng</a></li>
                                 @if (roleName == "Student")
                                 {
                                 <li><a class="dropdown-item" asp-controller="Complaints" asp-action="Index">Khiếu nại</a></li>
@@ -83,12 +95,8 @@
                                         <a class="nav-link text-dark" asp-controller="HostelUsers" asp-action="Logout">Logout (@roleName)</a>
                                     </li>
                                 }
-=======
-                                <li><a class="dropdown-item" asp-controller="Rooms" asp-action="Index">Phòng</a></li>
-                                <li><a class="dropdown-item" asp-controller="Payments" asp-action="Index">Thanh toán</a></li>
-                                <li><a class="dropdown-item" asp-controller="Complaints" asp-action="Index">Khiếu nại</a></li>
+
                                 <li><a class="dropdown-item" asp-controller="Rooms" asp-action="Index">Danh sách phòng</a></li>
->>>>>>> 7e29fa935e0f593dd78eb1c934e1e2fc414d880a
                             </ul>
                         </li>
                     </ul>

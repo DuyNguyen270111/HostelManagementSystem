@@ -14,5 +14,10 @@ namespace Repository
         {
             return AccountDAO.GetAccountByEmailAndPassword(userName, password);
         }
+
+        public List<HostelUser> getAllHostelU()
+        {
+            return AccountDAO.getAllHostelU();
+        }
     }
 }

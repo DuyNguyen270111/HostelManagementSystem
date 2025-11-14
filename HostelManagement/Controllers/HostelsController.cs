@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HostelManagement.BusinessObject;
 using HostelManagement.Models;
 using Service;
+using DataAccessObject;
 
 namespace HostelManagement.Controllers
 {

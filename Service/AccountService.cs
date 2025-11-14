@@ -19,5 +19,10 @@ namespace Service
         {
             return iac.GetAccountByEmailAndPassword(userName, password);
         }
+
+        public List<HostelUser> getAllHostelU()
+        {
+           return iac.getAllHostelU();
+        }
     }
 }

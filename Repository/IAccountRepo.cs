@@ -10,5 +10,6 @@ namespace Repository
   public interface IAccountRepo
     {
         HostelUser GetAccountByEmailAndPassword(string userName, string password);
+        List<HostelUser> getAllHostelU();
     }
 }

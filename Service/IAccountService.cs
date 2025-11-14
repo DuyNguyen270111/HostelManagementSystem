@@ -10,5 +10,6 @@ namespace Service
    public interface IAccountService
     {
         HostelUser GetAccountByEmailAndPassword(string userName, string password);
+        List<HostelUser> getAllHostelU();
     }
 }

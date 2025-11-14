@@ -5,12 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HostelManagement.BusinessObject;
-<<<<<<< HEAD
 
-=======
-using HostelManagement.Models;
 using Microsoft.EntityFrameworkCore;
->>>>>>> 7e29fa935e0f593dd78eb1c934e1e2fc414d880a
+
 
 namespace DataAccessObject
 {

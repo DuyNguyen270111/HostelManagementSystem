@@ -25,7 +25,7 @@ namespace HostelManagement.Controllers
         // GET: HostelUsers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.HostelUsers.ToListAsync());
+            return View(iac.getAllHostelU());
         }
         [HttpGet]
         public IActionResult Login()
@@ -48,15 +48,15 @@ namespace HostelManagement.Controllers
             HttpContext.Session.SetString("UserRole", account.Role);
             HttpContext.Session.SetInt32("UserId", account.UserId);
             HttpContext.Session.SetString("UserName", account.Username);
-            if (account.Role.Equals("AdminRole"))
+            if (account.Role.Equals("Admin"))
             {
                 HttpContext.Session.SetString("UserRoleName", "Admin");
             }
-            else if (account.Role.Equals("WardenRole"))  
+            else if (account.Role.Equals("Warden"))  
             {
                 HttpContext.Session.SetString("UserRoleName", "Warden");
             }
-            else if (account.Role.Equals("StudentRole"))
+            else if (account.Role.Equals("Student"))
             {
                 HttpContext.Session.SetString("UserRoleName", "Student");
             }

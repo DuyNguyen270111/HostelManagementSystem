@@ -150,6 +150,8 @@ public partial class ProjectttContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("username");
+            entity.Property(e => e.Status)
+        .HasColumnName("status");
         });
 
         modelBuilder.Entity<Inventory>(entity =>
