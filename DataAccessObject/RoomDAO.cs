@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HostelManagement.BusinessObject;
-using HostelManagement.Models;
+
 
 namespace DataAccessObject
 {

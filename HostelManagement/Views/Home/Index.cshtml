@@ -1,8 +1,56 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Trang chủ";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+
+    <!-- Banner -->
+    <div class="p-5 mb-4 bg-primary text-white rounded-3 shadow">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Hệ Thống Quản Lý & Đặt Phòng Ký Túc Xá</h1>
+            <p class="col-md-8 fs-5 mt-3">
+                Nền tảng hỗ trợ sinh viên tìm kiếm phòng phù hợp và giúp ban quản lý theo dõi tình trạng phòng, sinh viên cư trú, hoá đơn và quản lý toàn bộ hoạt động KTX.
+            </p>
+            <a class="btn btn-light btn-lg mt-3" href="/Room">Xem phòng</a>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row text-center mt-4">
+        <h2 class="mb-4">Tính năng nổi bật</h2>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">Đặt phòng trực tuyến</h4>
+                    <p>Sinh viên có thể xem danh sách phòng còn trống và đăng ký nhanh chóng.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">Quản lý cư trú</h4>
+                    <p>Ban quản lý dễ dàng xem thông tin sinh viên, hợp đồng phòng và tình trạng cư trú.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">Quản lý hoá đơn</h4>
+                    <p>Tự động tạo và theo dõi hoá đơn điện nước, hỗ trợ thanh toán nhanh chóng.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Box -->
+    <div class="mt-5 p-4 bg-light border rounded text-center shadow-sm">
+        <h3>Bắt đầu ngay hôm nay</h3>
+        <p class="mt-2">Đăng nhập để sử dụng đầy đủ tính năng của hệ thống.</p>
+        <a class="btn btn-primary btn-lg" href="/Account/Login">Đăng nhập</a>
+    </div>
 </div>

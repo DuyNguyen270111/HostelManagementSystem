@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HostelManagement.BusinessObject;
 using HostelManagement.Models;
+using DataAccessObject;
 
 namespace HostelManagement.Controllers
 {

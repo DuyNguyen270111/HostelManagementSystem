@@ -1,0 +1,118 @@
+﻿@model HostelManagement.BusinessObject.Student;
+
+@{
+    ViewData["Title"] = "Chi tiết sinh viên";
+}
+@{
+    Layout = null;
+}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8fafc;
+        margin: 30px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #1e3a8a;
+        margin-bottom: 30px;
+    }
+
+    h4 {
+        color: #334155;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .details-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        padding: 25px 30px;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    dl {
+        margin-top: 15px;
+    }
+
+    dt {
+        color: #475569;
+        font-weight: 600;
+        padding: 10px 0;
+    }
+
+    dd {
+        color: #1e293b;
+        background-color: #f1f5f9;
+        padding: 10px 15px;
+        border-radius: 6px;
+        margin-bottom: 12px;
+    }
+
+    .actions {
+        text-align: center;
+        margin-top: 25px;
+    }
+
+        .actions a {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: black;
+            font-weight: 500;
+            margin: 0 5px;
+            transition: 0.2s;
+        }
+
+    
+
+        .btn-edit:hover {
+            background-color: #1e40af;
+        }
+
+    .btn-back {
+        background-color: #64748b;
+    }
+
+        .btn-back:hover {
+            background-color: #475569;
+        }
+</style>
+
+<h1>Chi tiết sinh viên</h1>
+
+<div class="details-card">
+    <h4>Thông tin sinh viên</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Name)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Gender)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Gender)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Dob)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Dob)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Course)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Course)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Phone)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Phone)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Email)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Email)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Address)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Address)</dd>
+    </dl>
+</div>
+
+<div class="actions">
+    <a asp-action="Edit" asp-route-id="@Model?.StudentId" class="btn-edit">Sửa thông tin</a>
+    <a asp-action="Index" class="btn-back">Quay lại danh sách</a>
+</div>

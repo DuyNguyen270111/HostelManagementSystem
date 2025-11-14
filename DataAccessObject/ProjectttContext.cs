@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using HostelManagement.BusinessObject;
 
-namespace HostelManagement.Models;
+namespace DataAccessObject;
 
 public partial class ProjectttContext : DbContext
 {
@@ -38,8 +38,23 @@ public partial class ProjectttContext : DbContext
     public virtual DbSet<Warden> Wardens { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=Projecttt;Integrated Security=True;TrustServerCertificate=True\n");
+    {
+
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(GetConnectionString());
+        }
+    }
+
+    private string? GetConnectionString()
+    {
+        IConfiguration configuration = new ConfigurationBuilder()
+         .SetBasePath(Directory.GetCurrentDirectory())
+         .AddJsonFile("appsettings.json")
+         .Build();
+
+        return configuration["ConnectionStrings:MyCnn"];
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

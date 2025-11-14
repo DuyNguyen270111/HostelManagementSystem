@@ -1,0 +1,62 @@
+﻿/* Navbar chính */
+.custom-navbar {
+    background: linear-gradient(90deg, #1e3a8a, #2563eb);
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+}
+
+    /* Brand logo */
+    .custom-navbar .navbar-brand {
+        font-size: 1.25rem;
+        color: #ffffff;
+        transition: transform 0.2s;
+    }
+
+        .custom-navbar .navbar-brand:hover {
+            transform: scale(1.05);
+            text-decoration: none;
+        }
+
+    /* Logo ảnh */
+    .custom-navbar .logo {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid #ffffff;
+    }
+
+    /* Menu links */
+    .custom-navbar .nav-link {
+        color: #ffffff;
+        transition: color 0.2s, background 0.2s;
+    }
+
+        .custom-navbar .nav-link:hover,
+        .custom-navbar .nav-link.active {
+            color: #ffd700; /* vàng nổi bật */
+            text-decoration: underline;
+        }
+
+    /* Dropdown menu */
+    .custom-navbar .dropdown-menu {
+        border-radius: 8px;
+        padding: 0.5rem 0;
+    }
+
+    /* Avatar user */
+    .custom-navbar .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid #ffffff;
+        transition: transform 0.2s;
+    }
+
+        .custom-navbar .avatar:hover {
+            transform: scale(1.1);
+        }
+
+    /* Shadow và hover */
+    .custom-navbar.shadow-sm {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }

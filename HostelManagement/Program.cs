@@ -1,5 +1,11 @@
-var builder = WebApplication.CreateBuilder(args);
-
+﻿var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Thời gian tồn tại session
+    options.Cookie.HttpOnly = true;                 // Cookie bảo mật
+    options.Cookie.IsEssential = true;              // Bắt buộc phải có
+});
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -13,7 +19,7 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthorization();
 
 app.MapControllerRoute(
