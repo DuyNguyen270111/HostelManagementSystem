@@ -10,5 +10,12 @@ namespace Repository
     public interface IRoomRepo
     {
         List<Room> getAllRoom();
+        void AddRoom(Room room);
+        Room GetRoomById(int id);
+        void EditRoomById(Room room);
+        void ToggleStatus(int id);
+        List<Room> GetRoomsByWardenId(int wardenId);
+        Hostel GetHostelByWardenId(int wardenId);
+        int GetRoomCountByHostelId(int hostelId);
     }
 }
